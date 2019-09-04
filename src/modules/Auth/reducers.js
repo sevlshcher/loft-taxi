@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions';
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+import { load } from '../../localStorage';
 import {
     loginSubmitRequest,
     loginSubmitSuccess,
@@ -12,7 +13,7 @@ const isAuthorized = handleActions({
     [loginSubmitSuccess]: (_state, action) => true,
     [loginSubmitFailure]: (_state, action) => false,
     [logoutSubmit]: (_state, action) => false,
-}, false)
+}, load('isAuthorized'))
 
 const authError = handleActions({
     [loginSubmitRequest]: (_state, action) => null,

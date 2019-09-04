@@ -1,6 +1,5 @@
-export const getAuth = (userName, userPassword) =>
+export const getAuth = (username, password) =>
   fetch(
-    `https://loft-taxi.glitch.me/auth?username=${userName}&password=${userPassword}`
-  ).then(response => {
-    return response.status === 200 ? Promise.reject(response) : response.json()
-  })
+    `https://loft-taxi.glitch.me/auth?username=${username}&password=${password}`
+  ).then(response => response.json())
+  .catch(error => console.log(error))

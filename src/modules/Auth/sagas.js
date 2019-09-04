@@ -1,27 +1,40 @@
-import { takeEvery, call, put } from 'redux-saga/effects'
+import { takeEvery, call, put, fork } from 'redux-saga/effects'
 import { getAuth } from './api'
+import { save } from '../../localStorage'
 import {
     loginSubmitRequest,
     loginSubmitSuccess,
-    loginSubmitFailure
+    loginSubmitFailure,
+    logoutSubmit
 } from './actions'
-
-function* authWatcher() {
-    yield takeEvery(loginSubmitRequest, loginFlow)
-  }
 
 export function* loginFlow(action) {
   const { username, password } = action.payload;
   try {
     const response = yield call(getAuth, username, password)
     if (response.success) {
-      yield put(loginSubmitSuccess())
+      yield call(save, 'isAuthorized', true)
+      yield put(loginSubmitSuccess(action.payload))
     } else {
-      yield put(loginSubmitFailure())
+      yield put(loginSubmitFailure(response.error))
     }
   } catch (error) {
-    yield put(loginSubmitFailure())
+    yield put(loginSubmitFailure(action.payload))
   }
 }
 
-export default authWatcher
+export function* logoutFlow(action) {
+  try {
+    yield call(save, 'isAuthorized', false)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+function* authWatcher() {
+  yield takeEvery(loginSubmitRequest, loginFlow)
+  yield takeEvery(logoutSubmit, logoutFlow)
+}
+
+export default function*() {
+  yield fork(authWatcher)}
