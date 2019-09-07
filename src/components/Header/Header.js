@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Typography, Button, Box, withStyles, AppBar, Toolbar } from '@material-ui/core';
-import {getIsAuthorized} from '../../modules/Auth';
+import {getIsAuthorized, logoutSubmit} from '../../modules/Auth';
 
 const styles = theme => ({
     AppBar: {
@@ -13,7 +13,7 @@ const styles = theme => ({
     }
 })
 
-const Header = ({ classes, IsAuthorized, logout }) => {
+const Header = ({ classes, IsAuthorized, logoutSubmit }) => {
     return (
         <div>
             <AppBar className={classes.AppBar}>
@@ -31,7 +31,7 @@ const Header = ({ classes, IsAuthorized, logout }) => {
                             Профиль
                         </Button>
                         {IsAuthorized ? (
-                            <Button onClick={logout}>Выйти</Button>
+                            <Button onClick={logoutSubmit}>Выйти</Button>
                         ) : (
                             <Button component={Link} to='/login'>Войти</Button>
                         )}
@@ -45,5 +45,5 @@ const Header = ({ classes, IsAuthorized, logout }) => {
 export default connect(
     state => ({
         IsAuthorized: getIsAuthorized(state)
-    }),
+    }), {logoutSubmit}
 )(withStyles(styles)(Header))

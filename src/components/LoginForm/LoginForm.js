@@ -46,8 +46,8 @@ const customInput = ({
 
 const myValidator = values => {
   const errors = {};
-  if (values.userName !== 'test@test.com') {
-    errors.userName = "Неверный логин";
+  if (values.username !== 'test@test.com') {
+    errors.username = "Неверный логин";
   }
   if (values.password !== '123123') {
     errors.password = "Неправильный пароль";
@@ -60,7 +60,6 @@ const LoginForm = props => {
   const onSubmit = data => {
     const { loginSubmitRequest } = props
     loginSubmitRequest(data)
-    console.log(data)
   }
   return isAuthorized ? (
     <Redirect to='/map' />
@@ -78,7 +77,7 @@ const LoginForm = props => {
           </Typography>
           <div>
             <Field className={classes.Field}
-              name="userName"
+              name="username"
               type="text"
               id="user-name"
               placeholder="Имя пользователя"
