@@ -23,14 +23,15 @@ const OderPlaced = ({ classes }) => {
         <Typography className={classes.typo} variant='h4' align='left' >
           Заказ размещён
         </Typography>
-        <Typography variant='h8' align='left' >
+        <Typography align='left' >
           Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
         </Typography>
         <div>
-            <Button className={classes.button} component={Link} to='/profile'
+            <Button className={classes.button}
             variant='outlined'
             color='primary'
-            type="submit">
+            type="submit"
+            onClick={removeLayout}>
             СДЕЛАТЬ НОВЫЙ ЗАКАЗ
             </Button>
         </div>
